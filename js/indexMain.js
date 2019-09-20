@@ -3,15 +3,15 @@ gridContainerWidth = 0.92 * documentWidth;
 cellSideLength = 0.18 * documentWidth;
 cellSpace = 0.04 * documentWidth;
 
-function getPosTop(i, j) {
+function getPosTop (i, j) {
     return cellSpace + i * (cellSpace + cellSideLength);
 }
 
-function getPosLeft(i, j) {
+function getPosLeft (i, j) {
     return cellSpace + j * (cellSpace + cellSideLength);
 }
 
-function getNumberBackgroundColor(number) {
+function getNumberBackgroundColor (number) {
     switch (number) {
         case 2:
             return "#eee4da";
@@ -56,12 +56,12 @@ function getNumberBackgroundColor(number) {
     return 'black';
 }
 
-function getNumberColor(number) {
+function getNumberColor (number) {
     if (number <= 4) return '#776e65';
     return 'white';
 }
 
-function nospace(board) {
+function nospace (board) {
     for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 4; j++) {
             if (board[i][j] === 0) return false;
@@ -70,7 +70,7 @@ function nospace(board) {
     return true;
 }
 
-function canMoveLeft(board) {
+function canMoveLeft (board) {
     for (var i = 0; i < 4; i++) {
         for (var j = 1; j < 4; j++) {
             if (board[i][j] != 0) {
@@ -81,7 +81,7 @@ function canMoveLeft(board) {
     return false;
 }
 
-function canMoveUp(board) {
+function canMoveUp (board) {
     for (var j = 0; j < 4; j++) {
         for (var i = 1; i < 4; i++) {
             if (board[i][j] != 0) {
@@ -92,7 +92,7 @@ function canMoveUp(board) {
     return false;
 }
 
-function canMoveRight(board) {
+function canMoveRight (board) {
     for (var i = 0; i < 4; i++) {
         for (var j = 2; j >= 0; j--) {
             if (board[i][j] != 0) {
@@ -103,7 +103,7 @@ function canMoveRight(board) {
     return false;
 }
 
-function canMoveDown(board) {
+function canMoveDown (board) {
     for (var j = 0; j < 4; j++) {
         for (var i = 2; i >= 0; i--) {
             if (board[i][j] != 0) {
@@ -114,43 +114,43 @@ function canMoveDown(board) {
     return false;
 }
 
-function noBlockHorizontal(row, coll, col2, board) {
+function noBlockHorizontal (row, coll, col2, board) {
     for (var i = coll + 1; i < col2; i++) {
         if (board[row][i] != 0) return false;
     }
     return true;
 }
 
-function noBlockVertical(col, row1, row2, board) {
+function noBlockVertical (col, row1, row2, board) {
     for (var i = row1 + 1; i < row2; i++) {
         if (board[i][col] != 0) return false;
     }
     return true;
 }
 
-function nomove(board) {
+function nomove (board) {
     if (canMoveDown(board) || canMoveUp(board) || canMoveLeft(board) || canMoveRight(board)) return false;
     return true;
 }
 
-function showNumberWithAnimation(i, j, randNumber) {
-    var numberCell = $('#number-cell-' + i +'-'+ j);
+function showNumberWithAnimation (i, j, randNumber) {
+    var numberCell = $('#number-cell-' + i + '-' + j);
 
-	numberCell.css("background-color",getNumberBackgroundColor(randNumber))
-              .css("color",getNumberColor(randNumber))
-              .css('border-radius',0.06*cellSideLength)
-              .text(randNumber)
-              .css('font-size',0.6*cellSideLength+'px');
+    numberCell.css("background-color", getNumberBackgroundColor(randNumber))
+        .css("color", getNumberColor(randNumber))
+        .css('border-radius', 0.06 * cellSideLength)
+        .text(randNumber)
+        .css('font-size', 0.6 * cellSideLength + 'px');
 
-	numberCell.animate({
-		width:cellSideLength,
-		height:cellSideLength,
-		top:getPosTop(i,j),
-		left:getPosLeft(i,j),
-	},50);
+    numberCell.animate({
+        width: cellSideLength,
+        height: cellSideLength,
+        top: getPosTop(i, j),
+        left: getPosLeft(i, j),
+    }, 50);
 }
 
-function showMoveAnimation(fromx, fromy, tox, toy) {
+function showMoveAnimation (fromx, fromy, tox, toy) {
     var numberCell = $('#number-cell' + fromx + '-' + fromy);
     numberCell.animate({
         top: getPosTop(tox, toy),
@@ -158,7 +158,7 @@ function showMoveAnimation(fromx, fromy, tox, toy) {
     }, 200);
 }
 
-function upDateScore(score) {
+function upDateScore (score) {
     $('#score').text(score);
 }
 
@@ -176,7 +176,7 @@ $(document).ready(function () {
     newgame();
 });
 
-function prepareForMobile() {
+function prepareForMobile () {
     if (documentWidth > 500) {
         gridContainerWidth = 500;
         cellSideLength = 100;
@@ -188,7 +188,7 @@ function prepareForMobile() {
     $('.grid-cell').css('width', cellSideLength).css('height', cellSideLength).css('border-radius', 0.06 * cellSideLength);
 }
 
-function newgame() {
+function newgame () {
     // 初始化
     init();
     // 随机生成两个数字
@@ -196,7 +196,7 @@ function newgame() {
     generateOneNumber();
 }
 
-function init() {
+function init () {
     for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 4; j++) {
             var gridCell = $('#grid-cell-' + i + '-' + j);
@@ -217,7 +217,7 @@ function init() {
     score = 0;
 }
 
-function updateBoardView() {
+function updateBoardView () {
     $('.number-cell').remove();
     for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 4; j++) {
@@ -238,7 +238,7 @@ function updateBoardView() {
 }
 
 
-function generateOneNumber() {
+function generateOneNumber () {
     // 判断是否存在空间
     if (nospace(board)) return false;
 
@@ -338,7 +338,7 @@ document.addEventListener('touchend', function (event) {
         }
     } else {
         if (deltay > 0) {
-            if (canMoveDown()) {
+            if (canMoveDown(board)) {
                 setTimeout('generateOneNumber()', 210);
                 setTimeout('isganeover()', 210);
             }
@@ -351,17 +351,17 @@ document.addEventListener('touchend', function (event) {
     }
 });
 
-function isganeover() {
+function isganeover () {
     if (nospace(board) && nomove(board)) {
         gameover();
     }
 }
 
-function gameover() {
+function gameover () {
     alert('GAMEOVER!');
 }
 
-function moveLeft() {
+function moveLeft () {
     if (!canMoveLeft(board)) //判断是否可以向左移动
         return false;
 
@@ -398,7 +398,7 @@ function moveLeft() {
     return true;
 }
 
-function moveRight() {
+function moveRight () {
     if (!canMoveRight(board)) return false; //判断是否可以向左移动
 
     for (var i = 0; i < 4; i++) {
@@ -430,7 +430,7 @@ function moveRight() {
     return true;
 }
 
-function moveUp() {
+function moveUp () {
     // 判断是否可以向上移动
     if (!canMoveUp(board)) return false;
 
@@ -462,7 +462,7 @@ function moveUp() {
     return true;
 }
 
-function moveDown() {
+function moveDown () {
     if (!canMoveDown(board)) return false;
 
     for (var j = 0; j < 4; j++) {
